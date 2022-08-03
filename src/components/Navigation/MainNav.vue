@@ -4,21 +4,23 @@
       <div
         class="flex flex-nowrap h-full px-8 mx-auto border-b border-solid border-brand-gray-1"
       >
-        <a :href="url" class="flex items-center h-full text-xl">{{
-          company
-        }}</a>
+        <router-link to="/" class="flex items-center h-full text-xl"
+          >Icebear Careers</router-link
+        >
 
         <nav class="h-full ml-12">
           <ul class="flex h-full p-0 m-0 list-none">
             <li
               v-for="menuItem in menuItems"
-              :key="menuItem"
+              :key="menuItem.text"
               class="h-full ml-9 first:ml-0"
               data-test="main-nav-list-item"
             >
-              <a href="" class="flex items-center h-full py2.5">{{
-                menuItem
-              }}</a>
+              <router-link
+                :to="menuItem.url"
+                class="flex items-center h-full py2.5"
+                >{{ menuItem.text }}</router-link
+              >
             </li>
           </ul>
         </nav>
@@ -53,15 +55,13 @@ export default {
   },
   data() {
     return {
-      company: "CodingIcebear Careers",
-      url: "https://www.careers.google.com",
       menuItems: [
-        "Teams",
-        "Location",
-        "Life at Icebear Corp",
-        "How we hire",
-        "Students",
-        "Jobs",
+        { text: "Teams", url: "/" },
+        { text: "Location", url: "/" },
+        { text: "Life at Icebear Corp", url: "/" },
+        { text: "How we hire", url: "/" },
+        { text: "Students", url: "/" },
+        { text: "Jobs", url: "/jobs/results" },
       ],
       isLoggedIn: false,
     };
