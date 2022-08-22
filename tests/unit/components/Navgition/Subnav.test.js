@@ -5,16 +5,15 @@ import Subnav from "@/components/Navigation/Subnav";
 describe("Subnav", () => {
   describe("user on job page", () => {
     it("displays job content", () => {
+      const $route = { name: "JobResults" };
       const warpper = mount(Subnav, {
         global: {
+          mocks: {
+            $route,
+          },
           stubs: {
             FontAwesomeIcon: true,
           },
-        },
-        data() {
-          return {
-            onJobResultsPage: true,
-          };
         },
       });
 
@@ -24,16 +23,16 @@ describe("Subnav", () => {
   });
   describe("user is not on job page", () => {
     it("not displays job content", () => {
+      const $route = { name: "Home" };
+
       const warpper = mount(Subnav, {
         global: {
+          mocks: {
+            $route,
+          },
           stubs: {
             FontAwesomeIcon: true,
           },
-        },
-        data() {
-          return {
-            onJobResultsPage: false,
-          };
         },
       });
 
