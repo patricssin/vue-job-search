@@ -1,8 +1,30 @@
 <template>
   <main class="flex-auto p-8 bg-brand-gray-2">
     <ol>
-      <job-listing v-for="job in jobs" :key="job.id" :job="job" />
+      <job-listing v-for="job in displayJobs" :key="job.id" :job="job" />
     </ol>
+
+    <div class="mt-8 mx-auto">
+      <div class="flex flex-row flex-nowrap">
+        <p class="text-sm flex-grow">Page {{ currentPage }}</p>
+
+        <div
+          class="flex items-center justify-center text-sm font-semibold text-brand-blue-1"
+        >
+          <router-link
+            v-if="previousPage"
+            :to="{ name: 'JobResults', query: { page: previousPage } }"
+            >Previous</router-link
+          >
+          <router-link
+            v-if="nextPage"
+            :to="{ name: 'JobResults', query: { page: nextPage } }"
+            class="mx-3 text-sm font-semibold text-brand-blue-1"
+            >Next</router-link
+          >
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -11,12 +33,32 @@ import axios from "axios";
 import JobListing from "./JobListing.vue";
 export default {
   name: "JobListings",
-
   components: { JobListing },
   data() {
     return {
       jobs: [],
     };
+  },
+  computed: {
+    currentPage() {
+      const pageString = this.$route.query.page || "1";
+      return Number.parseInt(pageString);
+    },
+    previousPage() {
+      const prevPage = this.currentPage - 1;
+      const firstPage = 1;
+      return prevPage >= firstPage ? prevPage : undefined;
+    },
+    nextPage() {
+      const nextPage = this.currentPage + 1;
+      const maxPage = this.jobs.length / 10;
+      return nextPage <= maxPage ? nextPage : undefined;
+    },
+    displayJobs() {
+      const startIdx = (this.currentPage - 1) * 10;
+      const endIdx = this.currentPage * 10;
+      return this.jobs.slice(startIdx, endIdx);
+    },
   },
   async mounted() {
     const res = await axios.get("http://localhost:3000/jobs");
