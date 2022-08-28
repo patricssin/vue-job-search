@@ -51,7 +51,7 @@ export default {
     },
     nextPage() {
       const nextPage = this.currentPage + 1;
-      const maxPage = this.jobs.length / 10;
+      const maxPage = Math.ceil(this.jobs.length / 10);
       return nextPage <= maxPage ? nextPage : undefined;
     },
     displayJobs() {
@@ -61,7 +61,8 @@ export default {
     },
   },
   async mounted() {
-    const res = await axios.get("http://localhost:3000/jobs");
+    const baseURL = process.env.VUE_APP_API_URL;
+    const res = await axios.get(`${baseURL}/jobs`);
     this.jobs = res.data;
   },
 };
