@@ -29,16 +29,18 @@
 </template>
 
 <script>
-import axios from "axios";
 import JobListing from "./JobListing.vue";
+import { mapState } from "vuex";
+import { FETCH_JOBS } from "@/store";
+
 export default {
   name: "JobListings",
   components: { JobListing },
-  data() {
-    return {
-      jobs: [],
-    };
-  },
+  // data() {
+  //   return {
+  //     jobs: [],
+  //   };
+  // },
   computed: {
     currentPage() {
       const pageString = this.$route.query.page || "1";
@@ -59,11 +61,14 @@ export default {
       const endIdx = this.currentPage * 10;
       return this.jobs.slice(startIdx, endIdx);
     },
+    ...mapState(["jobs"]),
   },
   async mounted() {
-    const baseURL = process.env.VUE_APP_API_URL;
-    const res = await axios.get(`${baseURL}/jobs`);
-    this.jobs = res.data;
+    // const baseURL = process.env.VUE_APP_API_URL;
+    // const res = await axios.get(`${baseURL}/jobs`);
+    // this.jobs = res.data;
+    this.$store.dispatch(FETCH_JOBS);
   },
+  // use action instead of mounted
 };
 </script>
