@@ -9,6 +9,8 @@ const JobResultsView = () =>
 const JobView = () =>
   import(/* webpackChunkName: "jobs" */ "@/views/JobView.vue");
 
+const TeamsView = () => import("@/views/TeamsView.vue");
+
 const routes = [
   {
     path: "/",
@@ -24,6 +26,11 @@ const routes = [
     path: "/jobs/results/:id",
     name: "JobListing",
     component: JobView,
+  },
+  {
+    path: "/teams",
+    name: "Teams",
+    component: TeamsView,
   },
 ];
 // track user browser history forward or back
