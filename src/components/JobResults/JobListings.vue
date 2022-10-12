@@ -30,8 +30,8 @@
 
 <script>
 import JobListing from "./JobListing.vue";
-import { mapState } from "vuex";
-import { FETCH_JOBS } from "@/store";
+import { mapGetters } from "vuex";
+import { FETCH_JOBS, FILTER_JOBS_BY_ORGANIZAITONS } from "@/store";
 
 export default {
   name: "JobListings",
@@ -42,6 +42,7 @@ export default {
   //   };
   // },
   computed: {
+    ...mapGetters([FILTER_JOBS_BY_ORGANIZAITONS]),
     currentPage() {
       const pageString = this.$route.query.page || "1";
       return Number.parseInt(pageString);
@@ -53,15 +54,15 @@ export default {
     },
     nextPage() {
       const nextPage = this.currentPage + 1;
-      const maxPage = Math.ceil(this.jobs.length / 10);
+      const maxPage = Math.ceil(this.FILTER_JOBS_BY_ORGANIZAITONS.length / 10);
       return nextPage <= maxPage ? nextPage : undefined;
     },
     displayJobs() {
       const startIdx = (this.currentPage - 1) * 10;
       const endIdx = this.currentPage * 10;
-      return this.jobs.slice(startIdx, endIdx);
+      return this.FILTER_JOBS_BY_ORGANIZAITONS.slice(startIdx, endIdx);
     },
-    ...mapState(["jobs"]),
+    // ...mapState(["jobs"]),
   },
   async mounted() {
     // const baseURL = process.env.VUE_APP_API_URL;

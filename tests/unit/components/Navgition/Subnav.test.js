@@ -4,12 +4,19 @@ import Subnav from "@/components/Navigation/Subnav";
 
 describe("Subnav", () => {
   describe("user on job page", () => {
-    it("displays job content", () => {
-      const $route = { name: "JobResults" };
+    it("displays job count", () => {
+      const $route = { name: "Home" };
+      const $store = {
+        getters: {
+          FILTER_JOBS_BY_ORGANIZAITONS: [{ id: 1 }, { id: 2 }],
+        },
+      };
+
       const warpper = mount(Subnav, {
         global: {
           mocks: {
             $route,
+            $store,
           },
           stubs: {
             FontAwesomeIcon: true,
@@ -18,17 +25,23 @@ describe("Subnav", () => {
       });
 
       const jobCount = warpper.find("[data-test='job-count']");
-      expect(jobCount.exists()).toBe(true);
+      expect(jobCount.text()).toBe("2 jobs matched");
     });
   });
   describe("user is not on job page", () => {
     it("not displays job content", () => {
       const $route = { name: "Home" };
+      const $store = {
+        getters: {
+          FILTER_JOBS_BY_ORGANIZAITONS: [{ id: 1 }, { id: 2 }],
+        },
+      };
 
       const warpper = mount(Subnav, {
         global: {
           mocks: {
             $route,
+            $store,
           },
           stubs: {
             FontAwesomeIcon: true,
