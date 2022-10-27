@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <accordion header="Job Types"></accordion>
+      <job-filters-sidebar-job-types />
 
       <job-filters-sidebar-organizations />
     </section>
@@ -19,11 +19,15 @@
 
 <script>
 import ActionButton from "@/components/Shared/ActionButton.vue";
-import Accordion from "@/components/Shared/Accordion.vue";
 import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue";
+import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue";
 
 export default {
   name: "JobFilterSidebar",
-  components: { ActionButton, Accordion, JobFiltersSidebarOrganizations },
+  components: {
+    ActionButton,
+    JobFiltersSidebarOrganizations,
+    JobFiltersSidebarJobTypes,
+  },
 };
 </script>

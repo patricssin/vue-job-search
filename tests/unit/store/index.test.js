@@ -11,6 +11,10 @@ describe("state", () => {
     const startingState = state();
     expect(startingState.jobs).toEqual([]);
   });
+  it("stores job types that the user would like to filter jobs by", () => {
+    const startingState = state();
+    expect(startingState.selectedJobTypes).toEqual([]);
+  });
 });
 
 describe("mutations", () => {
@@ -35,6 +39,13 @@ describe("mutations", () => {
       expect(state).toEqual({ selectedOrganizations: ["org 1"] });
     });
   });
+  describe("ADD_SELECTED_JOB_TYPES", () => {
+    it("update organizations that user has chosen to filter jobs", () => {
+      const state = { selectedJobTypes: [] };
+      mutations.ADD_SELECTED_JOB_TYPES(state, ["full-time", "part-time"]);
+      expect(state).toEqual({ selectedJobTypes: ["full-time", "part-time"] });
+    });
+  });
 });
 
 describe("getters", () => {
@@ -50,6 +61,41 @@ describe("getters", () => {
 
       const result = getters.UNIQUE_ORGANIZATIONS(state);
       expect(result).toEqual(new Set(["Google", "Amazon"]));
+    });
+  });
+  describe("UNIQUE_JOB_TYPES", () => {
+    it("finds unique job types from list of jobs", () => {
+      const state = {
+        jobs: [
+          { jobType: "Full-time" },
+          { jobType: "Temporary" },
+          { jobType: "Full-time" },
+        ],
+      };
+
+      const result = getters.UNIQUE_JOB_TYPES(state);
+      expect(result).toEqual(new Set(["Full-time", "Temporary"]));
+    });
+  });
+  describe("FILTERED_JOBS", () => {
+    it("filters jobs by org and type", () => {
+      const INCLUDE_JOB_BY_ORGANIZATION = jest.fn().mockReturnValue(true);
+      const INCLUDE_JOB_BY_JOB_TYPE = jest.fn().mockReturnValue(true);
+
+      const mockGetters = {
+        INCLUDE_JOB_BY_JOB_TYPE,
+        INCLUDE_JOB_BY_ORGANIZATION,
+      };
+
+      const job = { id: 1, title: "title" };
+      const state = {
+        jobs: [job],
+      };
+
+      const result = getters.FILTERED_JOBS(state, mockGetters);
+      expect(result).toEqual([job]);
+      expect(INCLUDE_JOB_BY_ORGANIZATION).toHaveBeenCalledWith(job);
+      expect(INCLUDE_JOB_BY_JOB_TYPE).toHaveBeenCalledWith(job);
     });
   });
 });

@@ -8,7 +8,7 @@ describe("Subnav", () => {
       const $route = { name: "Home" };
       const $store = {
         getters: {
-          FILTER_JOBS_BY_ORGANIZAITONS: [{ id: 1 }, { id: 2 }],
+          FILTERED_JOBS: [{ id: 1 }, { id: 2 }],
         },
       };
 
@@ -33,7 +33,7 @@ describe("Subnav", () => {
       const $route = { name: "Home" };
       const $store = {
         getters: {
-          FILTER_JOBS_BY_ORGANIZAITONS: [{ id: 1 }, { id: 2 }],
+          FILTERED_JOBS: [{ id: 1 }, { id: 2 }],
         },
       };
 
