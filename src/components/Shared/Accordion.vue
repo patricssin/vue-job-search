@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { ref } from "@vue/reactivity";
+import { computed } from "@vue/runtime-core";
 export default {
   name: "Accordion",
   props: {
@@ -24,20 +26,19 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      isOpen: false,
+  setup() {
+    const isOpen = ref(false);
+    const open = () => {
+      isOpen.value = !isOpen.value;
     };
-  },
-  computed: {
-    createIcon() {
-      return this.isOpen ? ["fas", "angle-up"] : ["fas", "angle-down"];
-    },
-  },
-  methods: {
-    open() {
-      this.isOpen = !this.isOpen;
-    },
+    const createIcon = computed(() => {
+      return isOpen.value ? ["fas", "angle-up"] : ["fas", "angle-down"];
+    });
+    return {
+      open,
+      isOpen,
+      createIcon,
+    };
   },
 };
 </script>
