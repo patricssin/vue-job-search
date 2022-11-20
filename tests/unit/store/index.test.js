@@ -79,12 +79,12 @@ describe("getters", () => {
   });
   describe("FILTERED_JOBS", () => {
     it("filters jobs by org and type", () => {
-      const INCLUDE_JOB_BY_ORGANIZATION = jest.fn().mockReturnValue(true);
-      const INCLUDE_JOB_BY_JOB_TYPE = jest.fn().mockReturnValue(true);
+      const INLUCED_JOBS_BY_ORGANIZATIONS = jest.fn().mockReturnValue(true);
+      const INLUCED_JOBS_BY_JOB_TYPES = jest.fn().mockReturnValue(true);
 
       const mockGetters = {
-        INCLUDE_JOB_BY_JOB_TYPE,
-        INCLUDE_JOB_BY_ORGANIZATION,
+        INLUCED_JOBS_BY_JOB_TYPES,
+        INLUCED_JOBS_BY_ORGANIZATIONS,
       };
 
       const job = { id: 1, title: "title" };
@@ -94,8 +94,8 @@ describe("getters", () => {
 
       const result = getters.FILTERED_JOBS(state, mockGetters);
       expect(result).toEqual([job]);
-      expect(INCLUDE_JOB_BY_ORGANIZATION).toHaveBeenCalledWith(job);
-      expect(INCLUDE_JOB_BY_JOB_TYPE).toHaveBeenCalledWith(job);
+      expect(INLUCED_JOBS_BY_ORGANIZATIONS).toHaveBeenCalledWith(job);
+      expect(INLUCED_JOBS_BY_JOB_TYPES).toHaveBeenCalledWith(job);
     });
   });
 });

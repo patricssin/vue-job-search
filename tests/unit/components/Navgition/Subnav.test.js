@@ -5,7 +5,7 @@ import Subnav from "@/components/Navigation/Subnav";
 describe("Subnav", () => {
   describe("user on job page", () => {
     it("displays job count", () => {
-      const $route = { name: "Home" };
+      const $route = { name: "JobResults" };
       const $store = {
         getters: {
           FILTERED_JOBS: [{ id: 1 }, { id: 2 }],
