@@ -1,23 +1,25 @@
 import { mount } from "@vue/test-utils";
-
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 import Subnav from "@/components/Navigation/Subnav";
+
+jest.mock("vuex");
+jest.mock("vue-router");
 
 describe("Subnav", () => {
   describe("user on job page", () => {
     it("displays job count", () => {
-      const $route = { name: "JobResults" };
-      const $store = {
+      useRoute.mockReturnValue({
+        name: "JobResults",
+      });
+      useStore.mockReturnValue({
         getters: {
           FILTERED_JOBS: [{ id: 1 }, { id: 2 }],
         },
-      };
+      });
 
       const warpper = mount(Subnav, {
         global: {
-          mocks: {
-            $route,
-            $store,
-          },
           stubs: {
             FontAwesomeIcon: true,
           },
@@ -30,19 +32,17 @@ describe("Subnav", () => {
   });
   describe("user is not on job page", () => {
     it("not displays job content", () => {
-      const $route = { name: "Home" };
-      const $store = {
-        getters: {
-          FILTERED_JOBS: [{ id: 1 }, { id: 2 }],
-        },
-      };
+      useRoute.mockReturnValue({
+        name: "Home",
+      });
+      // useStore.mockReturnValue({
+      //   getters: {
+      //     FILTERED_JOBS: [],
+      //   },
+      // });
 
       const warpper = mount(Subnav, {
         global: {
-          mocks: {
-            $route,
-            $store,
-          },
           stubs: {
             FontAwesomeIcon: true,
           },
