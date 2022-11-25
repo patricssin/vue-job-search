@@ -25,7 +25,6 @@ export default {
     const url = `${baseUrl}/spotlights`;
 
     const response = await axios.get(url);
-    console.log(response.data);
     this.spotlights = response.data;
   },
 };

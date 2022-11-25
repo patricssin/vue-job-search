@@ -1,22 +1,16 @@
 import { mount } from "@vue/test-utils";
-import { useRoute } from "vue-router";
-import { useStore } from "vuex";
 import Subnav from "@/components/Navigation/Subnav";
+import useConfirmRoute from "@/composables/useConfirmRoute";
+import { useFilteredJobs } from "@/store/composables";
 
+jest.mock("@/composables/useConfirmRoute");
 jest.mock("vuex");
-jest.mock("vue-router");
 
 describe("Subnav", () => {
   describe("user on job page", () => {
     it("displays job count", () => {
-      useRoute.mockReturnValue({
-        name: "JobResults",
-      });
-      useStore.mockReturnValue({
-        getters: {
-          FILTERED_JOBS: [{ id: 1 }, { id: 2 }],
-        },
-      });
+      useConfirmRoute.mockReturnValue(true);
+      useFilteredJobs.mockReturnValue([{ id: 1 }, { id: 2 }]);
 
       const warpper = mount(Subnav, {
         global: {
@@ -32,14 +26,8 @@ describe("Subnav", () => {
   });
   describe("user is not on job page", () => {
     it("not displays job content", () => {
-      useRoute.mockReturnValue({
-        name: "Home",
-      });
-      // useStore.mockReturnValue({
-      //   getters: {
-      //     FILTERED_JOBS: [],
-      //   },
-      // });
+      useConfirmRoute.mockReturnValue(false);
+      useFilteredJobs.mockReturnValue([]);
 
       const warpper = mount(Subnav, {
         global: {

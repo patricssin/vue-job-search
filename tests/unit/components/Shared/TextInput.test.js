@@ -10,13 +10,10 @@ describe("TextInput", () => {
       },
     });
     const input = wrapper.find("input");
-    console.log(wrapper.emitted());
 
     input.setValue("Test");
-    console.log(wrapper.emitted());
 
     const messages = wrapper.emitted()["update:modelValue"];
-    console.log(messages);
     expect(messages).toEqual([["Test"]]);
   });
 });
