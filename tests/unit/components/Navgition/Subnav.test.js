@@ -4,6 +4,7 @@ import useConfirmRoute from "@/composables/useConfirmRoute";
 import { useFilteredJobs } from "@/store/composables";
 
 jest.mock("@/composables/useConfirmRoute");
+jest.mock("@/store/composables");
 jest.mock("vuex");
 
 describe("Subnav", () => {
