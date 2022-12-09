@@ -4,7 +4,9 @@
       <div
         class="flex flex-nowrap h-full px-8 mx-auto border-b border-solid border-brand-gray-1"
       >
-        <router-link to="/" class="flex items-center h-full text-xl"
+        <router-link
+          :to="{ name: 'Home' }"
+          class="flex items-center h-full text-xl"
           >Icebear Careers</router-link
         >
 
@@ -36,7 +38,7 @@
         </div>
       </div>
 
-      <div><Subnav v-if="isLoggedIn" data-test="subnav" /></div>
+      <subnav v-if="isLoggedIn" data-test="subnav" />
     </div>
   </header>
 </template>
@@ -45,7 +47,7 @@
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import ProfileImage from "@/components/Navigation/ProfileImage.vue";
 import Subnav from "@/components/Navigation/Subnav.vue";
-import { LOGIN_USER } from "@/store";
+import { LOGIN_USER } from "@/store/constants";
 import { mapState, mapMutations } from "vuex";
 
 export default {

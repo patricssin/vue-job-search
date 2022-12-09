@@ -46,10 +46,14 @@ describe("MainNav", () => {
     });
 
     it("issue call vuex", async () => {
-      const store = createStore();
       const commit = jest.fn();
-      store.commit = commit;
-      const wrapper = shallowMount(MainNav, createConfig(store));
+      const $store = {
+        state: {
+          isLoggedIn: false,
+        },
+        commit,
+      };
+      const wrapper = shallowMount(MainNav, createConfig($store));
       const loginBtn = wrapper.find("[data-test='login-button']");
       await loginBtn.trigger("click");
 

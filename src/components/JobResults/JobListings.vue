@@ -1,7 +1,12 @@
 <template>
   <main class="flex-auto p-8 bg-brand-gray-2">
     <ol>
-      <job-listing v-for="job in displayedJobs" :key="job.id" :job="job" />
+      <job-listing
+        v-for="job in displayedJobs"
+        :key="job.id"
+        :job="job"
+        data-test="job-listing"
+      />
     </ol>
 
     <div class="mt-8 mx-auto">
@@ -14,12 +19,14 @@
           <router-link
             v-if="previousPage"
             :to="{ name: 'JobResults', query: { page: previousPage } }"
+            data-test="previous-page-link"
             >Previous</router-link
           >
           <router-link
             v-if="nextPage"
             :to="{ name: 'JobResults', query: { page: nextPage } }"
             class="mx-3 text-sm font-semibold text-brand-blue-1"
+            data-test="next-page-link"
             >Next</router-link
           >
         </div>
