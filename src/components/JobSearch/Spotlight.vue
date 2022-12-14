@@ -10,14 +10,22 @@
   </ul>
 </template>
 
-<script>
+<script lang="ts">
 import axios from "axios";
 import { ref, onMounted } from "vue";
+import { defineComponent } from "vue";
 
-export default {
+interface Spotlight {
+  id: number;
+  title: string;
+  img: string;
+  description: string;
+}
+
+export default defineComponent({
   name: "Spotlight",
   setup() {
-    const spotlights = ref([]);
+    const spotlights = ref<Spotlight[]>([]);
 
     const getSpotlights = async () => {
       const baseUrl = process.env.VUE_APP_API_URL;
@@ -43,5 +51,5 @@ export default {
   //   const response = await axios.get(url);
   //   this.spotlights = response.data;
   // },
-};
+});
 </script>

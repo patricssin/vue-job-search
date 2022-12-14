@@ -15,10 +15,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Accordion",
   props: {
     header: {
@@ -40,5 +42,5 @@ export default {
       createIcon,
     };
   },
-};
+});
 </script>

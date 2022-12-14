@@ -14,18 +14,20 @@
         header="Job Types"
         :unique-values="uniqueJobTypes"
         :mutation="ADD_SELECTED_JOB_TYPES"
+        data-test="job-types-filter"
       />
 
       <job-filters-sidebar-checkbox-group
         header="Organizations"
         :unique-values="uniqueOrganization"
         :mutation="ADD_SELECTED_ORGANIZATIONS"
+        data-test="organization-filter"
       />
     </section>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
 
@@ -33,9 +35,11 @@ import { useUniqueJobTypes, useUniqueOrganizations } from "@/store/composables";
 import {
   ADD_SELECTED_JOB_TYPES,
   ADD_SELECTED_ORGANIZATIONS,
-} from "@/store/index";
+} from "@/store/constants";
 
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "JobFilterSidebar",
   components: {
     ActionButton,
@@ -52,5 +56,5 @@ export default {
       ADD_SELECTED_ORGANIZATIONS,
     };
   },
-};
+});
 </script>

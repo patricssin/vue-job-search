@@ -3,10 +3,12 @@ jest.mock("axios");
 
 import getJobs from "@/api/getJobs";
 
+const axisoMock = axios.get as jest.Mock;
+
 describe("getJobs", () => {
   beforeEach(() => {
     // axios.get.mockReturnValue(5);
-    axios.get.mockResolvedValue({
+    axisoMock.mockResolvedValue({
       data: [{ id: 1, title: "FE Developer" }],
     });
   });

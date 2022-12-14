@@ -1,9 +1,14 @@
 import { shallowMount, RouterLinkStub } from "@vue/test-utils";
 import MainNav from "@/components/Navigation/MainNav.vue";
 import { createStore } from "vuex";
+import { GlobalState } from "@/store/types";
+
+interface MockStore {
+  state: Partial<GlobalState>;
+}
 
 describe("MainNav", () => {
-  const createConfig = ($store) => ({
+  const createConfig = ($store: MockStore) => ({
     global: {
       mocks: {
         $store,
@@ -15,13 +20,22 @@ describe("MainNav", () => {
   });
 
   it("display company name", () => {
-    const store = createStore();
+    const store = {
+      state: {
+        isLoggedIn: false,
+      },
+    };
+
     const wrapper = shallowMount(MainNav, createConfig(store));
     expect(wrapper.text()).toMatch("Icebear Careers");
   });
 
   it("displays menu items for navigation", () => {
-    const store = createStore();
+    const store = {
+      state: {
+        isLoggedIn: false,
+      },
+    };
     const wrapper = shallowMount(MainNav, createConfig(store));
     const navigationMenuItems = wrapper.findAll(
       "[data-test='main-nav-list-item']"
@@ -39,7 +53,11 @@ describe("MainNav", () => {
 
   describe("when user is logged out", () => {
     it("prompts user to sign in", () => {
-      const store = createStore();
+      const store = {
+        state: {
+          isLoggedIn: false,
+        },
+      };
       const wrapper = shallowMount(MainNav, createConfig(store));
       const btn = wrapper.find("[data-test='login-button']");
       expect(btn.exists()).toBe(true);
@@ -63,24 +81,26 @@ describe("MainNav", () => {
 
   describe("when user is logged in", () => {
     it("displays user profile pic", () => {
-      const store = createStore({
-        state() {
-          return {
-            isLoggedIn: true,
-          };
+      const store = {
+        state: {
+          isLoggedIn: true,
         },
-      });
+      };
       const wrapper = shallowMount(MainNav, createConfig(store));
-      let img = wrapper.find("[data-test='profile-image']");
+      const img = wrapper.find("[data-test='profile-image']");
       expect(img.exists()).toBe(true);
     });
 
     it("displays subnavigatyion menu with additional info", () => {
-      const store = createStore();
+      const store = {
+        state: {
+          isLoggedIn: true,
+        },
+      };
       const wrapper = shallowMount(MainNav, createConfig(store));
-      let subnav = wrapper.find("[data-test='subnav']");
+      const subnav = wrapper.find("[data-test='subnav']");
 
-      expect(subnav.exists()).toBe(false);
+      expect(subnav.exists()).toBe(true);
     });
   });
 });

@@ -35,14 +35,15 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import JobListing from "./JobListing.vue";
 import { computed, onMounted } from "@vue/runtime-core";
 import { useFilteredJobs, useFetchJobsDispatch } from "@/store/composables";
 import useCurrentPage from "@/composables/useCurrentPage";
 import usePrevAndNextPages from "@/composables/usePrevAndNextPages";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "JobListings",
   components: { JobListing },
   setup() {
@@ -100,5 +101,5 @@ export default {
   //   this.$store.dispatch(FETCH_JOBS);
   // },
   // use action instead of mounted
-};
+});
 </script>
