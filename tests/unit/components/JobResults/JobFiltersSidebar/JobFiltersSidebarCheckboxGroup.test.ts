@@ -1,14 +1,16 @@
 import { mount } from "@vue/test-utils";
 import { useStore } from "vuex";
 jest.mock("vuex");
+const useStoreMock = useStore as jest.Mock;
 
 import { useRouter } from "vue-router";
 jest.mock("vue-router");
+const useRouterMock = useRouter as jest.Mock;
 
-import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup";
+import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
 
 describe("JobFiltersSidebarCheckboxGroup", () => {
-  const createConfig = (props) => ({
+  const createConfig = (props = {}) => ({
     global: {
       stubs: {
         FontAwesomeIcon: true,
@@ -34,8 +36,8 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
   describe("user click checkbox", () => {
     it("communicates that user has selected checkbox for value", async () => {
       const commit = jest.fn();
-      useStore.mockReturnValue({ commit });
-      useRouter.mockReturnValue({ push: jest.fn() });
+      useStoreMock.mockReturnValue({ commit });
+      useRouterMock.mockReturnValue({ push: jest.fn() });
       const props = {
         mutation: "SOME_MUTATION",
         uniqueValues: new Set(["Full-time"]),
@@ -47,7 +49,8 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
       const clickableArea = warpper.find("[data-test='clickable-area']");
       await clickableArea.trigger("click");
       const fullTimeInput = warpper.find("[data-test='Full-time']");
-      fullTimeInput.setChecked();
+      // fullTimeInput.setChecked();
+      fullTimeInput.setValue(true);
 
       expect(commit).toHaveBeenCalledWith("SOME_MUTATION", ["Full-time"]);
     });
