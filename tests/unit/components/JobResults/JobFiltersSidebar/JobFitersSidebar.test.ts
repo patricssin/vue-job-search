@@ -1,7 +1,6 @@
 import { mount, RouterLinkStub, shallowMount } from "@vue/test-utils";
 
-import JobFilterSidebar from "@/components/JobResults/JobFiltersSidebar.vue";
-import { Job } from "@/api/types";
+import JobFilterSidebar from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebar.vue";
 import { useUniqueJobTypes, useUniqueOrganizations } from "@/store/composables";
 jest.mock("@/store/composables");
 const useUniqueJobTypesMock = useUniqueJobTypes as jest.Mock;
