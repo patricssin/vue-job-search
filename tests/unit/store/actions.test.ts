@@ -30,7 +30,7 @@ describe("actions", () => {
   });
   describe("FETCH_DEGREES", () => {
     beforeEach(() => {
-      getJobsMock.mockResolvedValue([{ id: 1, degree: "Bachelor's" }]);
+      getDegreesMock.mockResolvedValue([{ id: 1, degree: "Bachelor's" }]);
     });
 
     it("makes a request to fetch degrees", async () => {

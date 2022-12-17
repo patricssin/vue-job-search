@@ -24,7 +24,7 @@
 <script lang="ts">
 import Accordion from "@/components/Shared/Accordion.vue";
 import { useStore } from "vuex";
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, PropType } from "vue";
 import { useRouter } from "vue-router";
 import { key } from "@/store";
 
@@ -39,7 +39,7 @@ export default defineComponent({
       required: true,
     },
     uniqueValues: {
-      type: Set,
+      type: [Array, Set] as PropType<string[] | Set<string>>, //[Array, Set] is for vue,
       required: true,
     },
     mutation: {
