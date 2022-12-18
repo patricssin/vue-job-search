@@ -53,4 +53,16 @@ describe("mutations", () => {
       expect(state.selectedDegrees).toEqual(["Master's", "Bachelor's"]);
     });
   });
+
+  describe("CLEAR_USER_JOB_FILTER_SELECTIONS", () => {
+    it("remove all filters", () => {
+      const state = createState({
+        selectedDegrees: ["radom selected degrees"],
+        selectedOrganizations: ["radom selected degrees"],
+        selectedJobTypes: ["radom selected degrees"],
+      });
+      mutations.CLEAR_USER_JOB_FILTER_SELECTIONS(state);
+      expect(state.selectedDegrees).toEqual([]);
+    });
+  });
 });

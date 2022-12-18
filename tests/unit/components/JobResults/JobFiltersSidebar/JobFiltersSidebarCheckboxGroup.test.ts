@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import { useStore } from "vuex";
 jest.mock("vuex");
 const useStoreMock = useStore as jest.Mock;
@@ -11,13 +11,7 @@ import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSi
 
 describe("JobFiltersSidebarCheckboxGroup", () => {
   const createConfig = (props = {}) => ({
-    global: {
-      stubs: {
-        FontAwesomeIcon: true,
-      },
-    },
     props: {
-      header: "Some header",
       uniqueValues: new Set(["VA", "VB"]),
       mutation: "Some mutation",
       ...props,
@@ -25,9 +19,13 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
   });
 
   it("renders unique list of values", async () => {
-    const warpper = mount(JobFiltersSidebarCheckboxGroup, createConfig({}));
-    const clickableArea = warpper.find("[data-test='clickable-area']");
-    await clickableArea.trigger("click");
+    // each item should have a usestore return with subscribe
+    useStoreMock.mockReturnValue({ commit: jest.fn(), subscribe: jest.fn() });
+
+    const warpper = shallowMount(
+      JobFiltersSidebarCheckboxGroup,
+      createConfig({})
+    );
     const inputTypeLabels = warpper.findAll("[data-test='value']");
     const inputValues = inputTypeLabels.map((node) => node.text());
     expect(inputValues).toEqual(["VA", "VB"]);
@@ -36,22 +34,20 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
   describe("user click checkbox", () => {
     it("communicates that user has selected checkbox for value", async () => {
       const commit = jest.fn();
-      useStoreMock.mockReturnValue({ commit });
+      const subscribe = jest.fn();
+      useStoreMock.mockReturnValue({ commit, subscribe });
       useRouterMock.mockReturnValue({ push: jest.fn() });
       const props = {
         mutation: "SOME_MUTATION",
         uniqueValues: new Set(["Full-time"]),
       };
-      const warpper = mount(
+      const warpper = shallowMount(
         JobFiltersSidebarCheckboxGroup,
         createConfig(props)
       );
-      const clickableArea = warpper.find("[data-test='clickable-area']");
-      await clickableArea.trigger("click");
       const fullTimeInput = warpper.find("[data-test='Full-time']");
       // fullTimeInput.setChecked();
       fullTimeInput.setValue(true);
-
       expect(commit).toHaveBeenCalledWith("SOME_MUTATION", ["Full-time"]);
     });
   });

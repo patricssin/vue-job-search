@@ -6,6 +6,7 @@ import {
   ADD_SELECTED_JOB_TYPES,
   RECEIVE_DEGREES,
   ADD_SELECTED_DEGREES,
+  CLEAR_USER_JOB_FILTER_SELECTIONS,
 } from "@/store/constants";
 
 import { GlobalState } from "./types";
@@ -13,6 +14,11 @@ import { GlobalState } from "./types";
 const mutations = {
   [LOGIN_USER](state: GlobalState) {
     state.isLoggedIn = true;
+  },
+  [CLEAR_USER_JOB_FILTER_SELECTIONS](state: GlobalState) {
+    state.selectedOrganizations = [];
+    state.selectedJobTypes = [];
+    state.selectedDegrees = [];
   },
   [RECEIVE_JOBS](state: GlobalState, jobs: Job[]) {
     state.jobs = jobs;
