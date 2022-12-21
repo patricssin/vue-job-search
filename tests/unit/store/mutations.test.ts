@@ -54,15 +54,27 @@ describe("mutations", () => {
     });
   });
 
+  describe("UPDATE_SKILL_SEARCH_TERM", () => {
+    it("reveices search term for skills the user has", () => {
+      const state = createState({ skillsSearchTerm: "" });
+      mutations.UPDATE_SKILL_SEARCH_TERM(state, "Vue");
+      expect(state.skillsSearchTerm).toEqual("Vue");
+    });
+  });
+
   describe("CLEAR_USER_JOB_FILTER_SELECTIONS", () => {
     it("remove all filters", () => {
       const state = createState({
         selectedDegrees: ["radom selected degrees"],
         selectedOrganizations: ["radom selected degrees"],
         selectedJobTypes: ["radom selected degrees"],
+        skillsSearchTerm: "radom skill",
       });
       mutations.CLEAR_USER_JOB_FILTER_SELECTIONS(state);
       expect(state.selectedDegrees).toEqual([]);
+      expect(state.selectedOrganizations).toEqual([]);
+      expect(state.selectedJobTypes).toEqual([]);
+      expect(state.skillsSearchTerm).toBe("");
     });
   });
 });

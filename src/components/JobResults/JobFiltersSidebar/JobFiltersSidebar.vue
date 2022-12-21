@@ -5,6 +5,10 @@
     <section class="pb-5">
       <job-filters-sidebar-prompt />
 
+      <accordion header="Skills and Qualifications">
+        <job-filters-sidebar-skills />
+      </accordion>
+
       <accordion header="Degrees">
         <job-filters-sidebar-degree />
       </accordion>
@@ -26,8 +30,13 @@ import JobFiltersSidebarDegree from "@/components/JobResults/JobFiltersSidebar/J
 import JobFiltersSidebarJobType from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobType.vue";
 import JobFiltersSidebarOrganization from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganization.vue";
 import JobFiltersSidebarPrompt from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarPrompt.vue";
+import JobFiltersSidebarSkills from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarSkills.vue";
 
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import { key } from "@/store";
+import { UPDATE_SKILL_SEARCH_TERM } from "@/store/constants";
 
 export default defineComponent({
   name: "JobFilterSidebar",
@@ -36,8 +45,17 @@ export default defineComponent({
     JobFiltersSidebarDegree,
     JobFiltersSidebarJobType,
     JobFiltersSidebarPrompt,
+    JobFiltersSidebarSkills,
     JobFiltersSidebarOrganization,
   },
-  setup() {},
+  setup() {
+    const parseSkillsSearchTerm = () => {
+      const route = useRoute();
+      const role = route.query.role || "";
+      const store = useStore(key);
+      store.commit(UPDATE_SKILL_SEARCH_TERM, role);
+    };
+    onMounted(parseSkillsSearchTerm);
+  },
 });
 </script>

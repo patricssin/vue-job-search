@@ -106,15 +106,26 @@ describe("getters", () => {
     });
   });
 
+  describe("INCLUDE_JOB_BY_SKILL", () => {
+    it("identifies if job matcher user's skill", () => {
+      const state = createState({ skillsSearchTerm: "Vue" });
+      const job = createJob({ title: "Vue Developer" });
+      const includedJob = getters.INCLUDED_JOB_BY_SKILL(state)(job);
+      expect(includedJob).toBe(true);
+    });
+  });
+
   describe("FILTERED_JOBS", () => {
     it("filters jobs by organization and job type", () => {
       const INCLUDE_JOB_BY_ORGANIZATION = jest.fn().mockReturnValue(true);
       const INCLUDE_JOB_BY_JOB_TYPE = jest.fn().mockReturnValue(true);
       const INCLUDE_JOB_BY_DEGREE = jest.fn().mockReturnValue(true);
+      const INCLUDED_JOB_BY_SKILL = jest.fn().mockReturnValue(true);
       const mockGetters = {
         INCLUDE_JOB_BY_ORGANIZATION,
         INCLUDE_JOB_BY_JOB_TYPE,
         INCLUDE_JOB_BY_DEGREE,
+        INCLUDED_JOB_BY_SKILL,
       };
       const job = createJob({ id: 1, title: "Best job ever" });
       const state = createState({ jobs: [job] });
@@ -123,6 +134,7 @@ describe("getters", () => {
       expect(INCLUDE_JOB_BY_ORGANIZATION).toHaveBeenCalledWith(job);
       expect(INCLUDE_JOB_BY_JOB_TYPE).toHaveBeenCalledWith(job);
       expect(INCLUDE_JOB_BY_DEGREE).toHaveBeenCalledWith(job);
+      expect(INCLUDED_JOB_BY_SKILL).toHaveBeenCalledWith(job);
     });
   });
 });

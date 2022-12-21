@@ -11,6 +11,11 @@ describe("state", () => {
     expect(startingState.jobs).toEqual([]);
   });
 
+  it("stores user's search term for skills", () => {
+    const startingState = state();
+    expect(startingState.skillsSearchTerm).toEqual("");
+  });
+
   it("stores all degrees that jobs may require", () => {
     const startingState = state();
     expect(startingState.degrees).toEqual([]);
